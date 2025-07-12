@@ -1,10 +1,18 @@
 import { quizData } from "@/home/quizData";
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+interface QuizState {
+  questions: typeof quizData;
+  currentQuestionIndex: number;
+  userAnswer: (string | null)[];
+  quizComplete: boolean;
+}
+
+const initialState: QuizState = {
   questions: quizData,
   currentQuestionIndex: 0,
   userAnswer: Array(quizData.length).fill(null),
+  quizComplete: false,
 };
 
 export const quizSlice = createSlice({
@@ -25,9 +33,13 @@ export const quizSlice = createSlice({
         state.currentQuestionIndex -= 1;
       }
     },
+    completeQuiz: (state) => {
+      state.quizComplete = true;
+    },
   },
 });
 
-export const { setAnswer, nextQuestion, prevQuestion } = quizSlice.actions;
+export const { setAnswer, nextQuestion, prevQuestion, completeQuiz } =
+  quizSlice.actions;
 
 export default quizSlice.reducer;
