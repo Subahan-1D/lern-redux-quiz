@@ -1,15 +1,21 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { useAppSelector } from "@/redux/hook";
+import { resetQuiz } from "@/redux/features/quizSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
 
 const QuizSummary = () => {
   const { userAnswer, questions } = useAppSelector((state) => state.quiz);
+  const dispatch = useAppDispatch();
   /**
    * correct ans count
    * incorrect ans count
    * correct percenteage
    */
+
+  const handleRetry = () => {
+    dispatch(resetQuiz());
+  };
   return (
     <div className="flex justify-center items-center min-h-[60vh]">
       <Card className="max-w-xl w-full shadow-lg p-6 border">
@@ -34,7 +40,7 @@ const QuizSummary = () => {
           <div className="text-center text-lg">Good Job ! kep working</div>
 
           <div className="flex justify-center mt-6">
-            <Button size="lg" className="px-8">
+            <Button onClick={handleRetry} size="lg" className="px-8">
               🔄 Try Again
             </Button>
           </div>

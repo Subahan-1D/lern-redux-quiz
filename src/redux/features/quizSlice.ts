@@ -36,10 +36,15 @@ export const quizSlice = createSlice({
     completeQuiz: (state) => {
       state.quizComplete = true;
     },
+    resetQuiz: (state) => {
+      state.currentQuestionIndex = 0;
+      state.userAnswer = Array(state.questions.length).fill(null);
+      state.quizComplete = false;
+    },
   },
 });
 
-export const { setAnswer, nextQuestion, prevQuestion, completeQuiz } =
+export const { setAnswer, nextQuestion, prevQuestion, completeQuiz , resetQuiz } =
   quizSlice.actions;
 
 export default quizSlice.reducer;
