@@ -13,6 +13,31 @@ const QuizSummary = () => {
    * correct percenteage
    */
 
+  // total question
+  const totalQuestions = questions.length;
+  // calculate correct ans
+
+  const correctAnswerCount = questions.reduce((count, questions, inx) => {
+    return questions.correctAnswer === userAnswer[inx] ? count + 1 : count;
+  }, 0);
+
+  // incorrect ans
+  const incorrectAnswer = questions.length - correctAnswerCount;
+
+  // percentage
+
+  const correctPercentage = parseFloat(
+    ((correctAnswerCount / questions.length) * 100).toFixed(2)
+  );
+
+  // performance
+
+  let performance = "";
+  if (correctPercentage >= 80) performance = "Excellent 🎉";
+  else if (correctPercentage >= 50) performance = "Good 🙂";
+  else performance = "Keep Practicing 💪";
+
+  console.log(correctAnswerCount, incorrectAnswer, correctPercentage);
   const handleRetry = () => {
     dispatch(resetQuiz());
   };
@@ -26,18 +51,18 @@ const QuizSummary = () => {
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="text-center text-xl font-semibold">
-            You got <span className="text-green-600">You</span> out of{" "}
-            <span className="text-blue-600">4</span>
+            You got <span className="text-green-600">{correctAnswerCount}</span>{" "}
+            out of <span className="text-blue-600">{totalQuestions}</span>
           </div>
-          <Progress value={33} className="h-4" />
+          <Progress value={correctPercentage} className="h-4" />
           <div className="flex justify-between text-sm text-gray-700">
-            <span>66%</span>
-            <span>Performance: Good</span>
+            <span>{correctPercentage}%</span>
+            <span>Performance: {performance}</span>
           </div>
           <div className="text-center text-red-500 font-medium">
-            Incorrect Answers: 4
+            Incorrect Answers: {incorrectAnswer}
           </div>
-          <div className="text-center text-lg">Good Job ! kep working</div>
+          <div className="text-center text-lg">{performance}</div>
 
           <div className="flex justify-center mt-6">
             <Button onClick={handleRetry} size="lg" className="px-8">
