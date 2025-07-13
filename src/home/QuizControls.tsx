@@ -36,7 +36,7 @@ export default function QuizControls() {
       </Button>
 
       <Button onClick={handleNext} disabled={!isAnswerSelected}>
-        {isLastQuestion ? "Finish" : "Next"}
+        {isLastQuestion ? "Completed Quiz" : "Next"}
       </Button>
     </div>
   );
